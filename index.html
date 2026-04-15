@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portafolio de Benjamin — Ingeniero de Sistemas, UNCP. Proyectos y habilidades." />
+  <meta name="author" content="Benjamin" />
+  <title>Benjamin | Ing. Sistemas</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <header class="header" id="header">
+    <div class="header__inner">
+      <a href="#hero" class="logo">by<span class="logo-dot">.</span></a>
+      
+      <nav class="nav" aria-label="Navegación principal">
+        <button class="nav__item" onclick="showSection('hero')">Inicio</button>
+        <button class="nav__item" onclick="showSection('about')">Sobre mí</button>
+        <button class="nav__item" onclick="showSection('projects')">Proyectos</button>
+        <button class="nav__item" onclick="showSection('skills')">Habilidades</button>
+        <button class="nav__item active" onclick="showSection('notebooks')">Cuadernos</button>
+        <button class="nav__item contact-btn" onclick="showSection('contact')">Contacto</button>
+      </nav>
+
+      <button class="burger" id="burger" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="section hero active" id="hero">
+      <div class="hero__bg-grid"></div>
+      <div class="hero__content">
+        <p class="hero__tag">// Ingeniero de Sistemas</p>
+        <h1 class="hero__name">Benjamin<br /><span>Yauri</span></h1>
+        <p class="hero__sub">UNCP · Huancayo, Perú · 9no semestre</p>
+        <div class="hero__actions">
+          <button class="btn btn--primary" onclick="showSection('projects')">Ver Proyectos</button>
+          <button class="btn btn--ghost" onclick="showSection('notebooks')">Mis Cuadernos →</button>
+        </div>
+      </div>
+      <div class="hero__code-block" aria-hidden="true">
+        <pre><code><span class="c-kw">const</span> dev = { name: <span class="c-str">"Benjamin"</span>, stack: [<span class="c-str">"HTML"</span>, <span class="c-str">"CSS"</span>, <span class="c-str">"JS"</span>] };</code></pre>
+      </div>
+    </section>
+
+    <section class="section about" id="about">
+      <div class="section__header">
+        <span class="section__num">01</span>
+        <h2 class="section__title">Sobre mí</h2>
+      </div>
+      <div class="about__grid">
+        <article class="about__text">
+          <p>Estudiante de Ingeniería de Sistemas en la <strong>UNCP</strong>. Enfocado en análisis de datos y desarrollo web.</p>
+          <div class="about__stats">
+            <div class="stat"><span class="stat__num">9°</span><span class="stat__label">Semestre</span></div>
+            <div class="stat"><span class="stat__num">UNCP</span><span class="stat__label">Universidad</span></div>
+          </div>
+        </article>
+        
+        <aside class="about__card">
+          <div class="about__avatar">by</div>
+          <div class="about__info">
+            <p><span class="info-label">Carrera</span> Ing. de Sistemas</p>
+            <p><span class="info-label">Estado</span> <span class="badge badge--green">Disponible</span></p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section projects" id="projects">
+      <div class="section__header">
+        <span class="section__num">02</span>
+        <h2 class="section__title">Proyectos</h2>
+      </div>
+      <div class="projects__grid" id="projects-grid"></div>
+      <button class="btn btn--outline add-btn" onclick="openAddProject()">+ Añadir proyecto</button>
+    </section>
+
+    <section class="section skills" id="skills">
+      <div class="section__header"><span class="section__num">03</span><h2 class="section__title">Habilidades</h2></div>
+      <div class="skills__grid">
+        <div class="skill-card">
+          <div class="skill-card__icon">🌐</div>
+          <h3>Frontend</h3>
+          <div class="skill-tags">
+            <span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JS</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card__icon">📊</div>
+          <h3>Datos</h3>
+          <div class="skill-tags"><span class="tag">SQL</span><span class="tag">PostgreSQL</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section notebooks" id="notebooks">
+      <div class="section__header">
+        <span class="section__num">04</span>
+        <h2 class="section__title">Cuadernos de Clase</h2>
+      </div>
+
+      <div class="notebooks__layout">
+        <aside class="notebooks__sidebar">
+          <div id="courses-list"></div>
+          <button class="btn btn--outline add-btn" onclick="openAddCourse()">+ Nuevo curso</button>
+        </aside>
+
+        <div class="notebooks__main">
+          <div class="notebook__header" id="notebook-title"><span>Selecciona un curso</span></div>
+          <div id="notebook-entries">
+            <p class="empty-msg">← Elige un cuaderno</p>
+          </div>
+          
+          <div class="notebook__add-entry" id="add-entry-area" style="display:none;">
+            <input class="input" id="entry-week" placeholder="Semana" />
+            <input class="input" id="entry-topic" placeholder="Tema" />
+            <textarea class="input" id="entry-notes" placeholder="Apuntes..." rows="4"></textarea>
+            <button class="btn btn--primary" onclick="saveEntry()">Guardar</button>
+          </div>
+          <button class="btn btn--ghost" id="show-add-entry" onclick="toggleAddEntry()" style="display:none;">+ Agregar apunte</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact">
+      <div class="section__header"><span class="section__num">05</span><h2 class="section__title">Contacto</h2></div>
+      <div class="contact__grid">
+        <div class="contact__info">
+          <div class="contact__links">
+            <a href="#" target="_blank" class="contact-link" id="github-link">⌥ GitHub</a>
+            <a href="#" class="contact-link" id="email-link">@ Email</a>
+          </div>
+          <button class="btn btn--outline" onclick="openEditContact()">✏️ Editar mis datos</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="modal-project">
+    <div class="modal__box">
+      <h3>Nuevo Proyecto</h3>
+      <input class="input" id="proj-title" placeholder="Nombre" />
+      <textarea class="input" id="proj-desc" placeholder="Descripción..." rows="3"></textarea>
+      <div class="modal__actions">
+        <button class="btn btn--ghost" onclick="closeModal('modal-project')">Cancelar</button>
+        <button class="btn btn--primary" onclick="saveProject()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <span>© 2025 Benjamin Mendoza · UNCP</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
