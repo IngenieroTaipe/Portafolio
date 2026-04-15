@@ -1,26 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Portafolio de Benjamin — Ingeniero de Sistemas, UNCP. Proyectos y habilidades." />
+  <meta name="description" content="Portafolio de Benjamin — Ingeniero de Sistemas, UNCP. Proyectos, habilidades y cuadernos de clase." />
   <meta name="author" content="Benjamin" />
   <title>Benjamin | Ing. Sistemas</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet" />
-  
   <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
 
+  <!-- HEADER / NAV -->
   <header class="header" id="header">
     <div class="header__inner">
-      <a href="#hero" class="logo">by<span class="logo-dot">.</span></a>
-      
+      <a href="#hero" class="logo">BM<span class="logo-dot">.</span></a>
       <nav class="nav" aria-label="Navegación principal">
         <button class="nav__item" onclick="showSection('hero')">Inicio</button>
         <button class="nav__item" onclick="showSection('about')">Sobre mí</button>
@@ -29,19 +25,21 @@
         <button class="nav__item active" onclick="showSection('notebooks')">Cuadernos</button>
         <button class="nav__item contact-btn" onclick="showSection('contact')">Contacto</button>
       </nav>
-
       <button class="burger" id="burger" aria-label="Abrir menú">
         <span></span><span></span><span></span>
       </button>
     </div>
   </header>
 
+  <!-- MAIN CONTENT WRAPPER -->
   <main>
+
+    <!-- ===== HERO ===== -->
     <section class="section hero active" id="hero">
       <div class="hero__bg-grid"></div>
       <div class="hero__content">
         <p class="hero__tag">// Ingeniero de Sistemas</p>
-        <h1 class="hero__name">Benjamin<br /><span>Yauri</span></h1>
+        <h1 class="hero__name">Benjamin<br /><span>Mendoza</span></h1>
         <p class="hero__sub">UNCP · Huancayo, Perú · 9no semestre</p>
         <div class="hero__actions">
           <button class="btn btn--primary" onclick="showSection('projects')">Ver Proyectos</button>
@@ -49,118 +47,211 @@
         </div>
       </div>
       <div class="hero__code-block" aria-hidden="true">
-        <pre><code><span class="c-kw">const</span> dev = { name: <span class="c-str">"Benjamin"</span>, stack: [<span class="c-str">"HTML"</span>, <span class="c-str">"CSS"</span>, <span class="c-str">"JS"</span>] };</code></pre>
+        <pre><code><span class="c-kw">const</span> dev = {
+  name: <span class="c-str">"Benjamin"</span>,
+  stack: [<span class="c-str">"HTML"</span>, <span class="c-str">"CSS"</span>, <span class="c-str">"JS"</span>],
+  uni: <span class="c-str">"UNCP"</span>,
+  passion: <span class="c-str">"sistemas"</span>
+};</code></pre>
       </div>
     </section>
 
+    <!-- ===== SOBRE MÍ ===== -->
     <section class="section about" id="about">
       <div class="section__header">
         <span class="section__num">01</span>
         <h2 class="section__title">Sobre mí</h2>
       </div>
       <div class="about__grid">
-        <article class="about__text">
-          <p>Estudiante de Ingeniería de Sistemas en la <strong>UNCP</strong>. Enfocado en análisis de datos y desarrollo web.</p>
+        <div class="about__text">
+          <p>Soy estudiante de Ingeniería de Sistemas en la <strong>Universidad Nacional del Centro del Perú</strong>, cursando el 9° semestre. Me interesa el análisis de datos, el desarrollo web y la resolución de problemas complejos con tecnología.</p>
+          <p>Fuera de la universidad, soy líder de grupo juvenil en mi iglesia y me apasiona la música, la moda vintage y el ejercicio.</p>
           <div class="about__stats">
             <div class="stat"><span class="stat__num">9°</span><span class="stat__label">Semestre</span></div>
+            <div class="stat"><span class="stat__num">IS093A</span><span class="stat__label">Curso actual</span></div>
             <div class="stat"><span class="stat__num">UNCP</span><span class="stat__label">Universidad</span></div>
           </div>
-        </article>
-        
-        <aside class="about__card">
-          <div class="about__avatar">by</div>
+        </div>
+        <div class="about__card">
+          <div class="about__avatar">BM</div>
           <div class="about__info">
             <p><span class="info-label">Carrera</span> Ing. de Sistemas</p>
-            <p><span class="info-label">Estado</span> <span class="badge badge--green">Disponible</span></p>
+            <p><span class="info-label">Ciudad</span> Huancayo, Junín</p>
+            <p><span class="info-label">Intereses</span> Data, Web, IA</p>
+            <p><span class="info-label">Estado</span> <span class="badge badge--green">Buscando trabajo</span></p>
           </div>
-        </aside>
+        </div>
       </div>
     </section>
 
+    <!-- ===== PROYECTOS ===== -->
     <section class="section projects" id="projects">
       <div class="section__header">
         <span class="section__num">02</span>
         <h2 class="section__title">Proyectos</h2>
       </div>
-      <div class="projects__grid" id="projects-grid"></div>
+      <div class="projects__grid" id="projects-grid">
+        <!-- Generados dinámicamente por JS -->
+      </div>
       <button class="btn btn--outline add-btn" onclick="openAddProject()">+ Añadir proyecto</button>
+
+      <!-- Modal agregar proyecto -->
+      <div class="modal" id="modal-project">
+        <div class="modal__box">
+          <h3>Nuevo Proyecto</h3>
+          <input class="input" id="proj-title" placeholder="Nombre del proyecto" />
+          <input class="input" id="proj-tech" placeholder="Tecnologías (ej: HTML, CSS, JS)" />
+          <textarea class="input" id="proj-desc" placeholder="Descripción breve..." rows="3"></textarea>
+          <input class="input" id="proj-link" placeholder="URL (GitHub o demo, opcional)" />
+          <div class="modal__actions">
+            <button class="btn btn--ghost" onclick="closeModal('modal-project')">Cancelar</button>
+            <button class="btn btn--primary" onclick="saveProject()">Guardar</button>
+          </div>
+        </div>
+      </div>
     </section>
 
+    <!-- ===== HABILIDADES ===== -->
     <section class="section skills" id="skills">
-      <div class="section__header"><span class="section__num">03</span><h2 class="section__title">Habilidades</h2></div>
+      <div class="section__header">
+        <span class="section__num">03</span>
+        <h2 class="section__title">Habilidades</h2>
+      </div>
       <div class="skills__grid">
         <div class="skill-card">
           <div class="skill-card__icon">🌐</div>
           <h3>Frontend</h3>
           <div class="skill-tags">
-            <span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JS</span>
+            <span class="tag">HTML5</span><span class="tag">CSS3</span>
+            <span class="tag">Flexbox</span><span class="tag">Grid</span>
+            <span class="tag">JavaScript</span>
           </div>
         </div>
         <div class="skill-card">
           <div class="skill-card__icon">📊</div>
           <h3>Datos</h3>
-          <div class="skill-tags"><span class="tag">SQL</span><span class="tag">PostgreSQL</span></div>
+          <div class="skill-tags">
+            <span class="tag">Excel</span><span class="tag">SQL básico</span>
+            <span class="tag">PostgreSQL</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card__icon">💻</div>
+          <h3>Programación</h3>
+          <div class="skill-tags">
+            <span class="tag">C++</span><span class="tag">Python básico</span>
+            <span class="tag">Git</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card__icon">🛠️</div>
+          <h3>Herramientas</h3>
+          <div class="skill-tags">
+            <span class="tag">VS Code</span><span class="tag">GitHub</span>
+            <span class="tag">Figma básico</span>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- ===== CUADERNOS ===== -->
     <section class="section notebooks" id="notebooks">
       <div class="section__header">
         <span class="section__num">04</span>
         <h2 class="section__title">Cuadernos de Clase</h2>
+        <p class="section__sub">Apuntes organizados por curso y semana</p>
       </div>
 
       <div class="notebooks__layout">
+        <!-- Sidebar: lista de cuadernos -->
         <aside class="notebooks__sidebar">
-          <div id="courses-list"></div>
+          <div class="notebooks__courses" id="courses-list">
+            <!-- Generado por JS -->
+          </div>
           <button class="btn btn--outline add-btn" onclick="openAddCourse()">+ Nuevo curso</button>
         </aside>
 
+        <!-- Panel principal -->
         <div class="notebooks__main">
-          <div class="notebook__header" id="notebook-title"><span>Selecciona un curso</span></div>
-          <div id="notebook-entries">
-            <p class="empty-msg">← Elige un cuaderno</p>
+          <div class="notebook__header" id="notebook-title">
+            <span>Selecciona un curso</span>
           </div>
-          
+          <div class="notebook__entries" id="notebook-entries">
+            <p class="empty-msg">← Elige un cuaderno para ver sus apuntes</p>
+          </div>
           <div class="notebook__add-entry" id="add-entry-area" style="display:none;">
-            <input class="input" id="entry-week" placeholder="Semana" />
-            <input class="input" id="entry-topic" placeholder="Tema" />
-            <textarea class="input" id="entry-notes" placeholder="Apuntes..." rows="4"></textarea>
-            <button class="btn btn--primary" onclick="saveEntry()">Guardar</button>
+            <input class="input" id="entry-week" placeholder="Semana (ej: Semana 02)" />
+            <input class="input" id="entry-topic" placeholder="Tema de la clase" />
+            <textarea class="input" id="entry-notes" placeholder="Apuntes, conceptos clave, tareas..." rows="4"></textarea>
+            <button class="btn btn--primary" onclick="saveEntry()">Guardar apunte</button>
           </div>
-          <button class="btn btn--ghost" id="show-add-entry" onclick="toggleAddEntry()" style="display:none;">+ Agregar apunte</button>
+          <button class="btn btn--ghost" id="show-add-entry" onclick="toggleAddEntry()" style="display:none; margin-top:1rem;">+ Agregar apunte</button>
+        </div>
+      </div>
+
+      <!-- Modal nuevo curso -->
+      <div class="modal" id="modal-course">
+        <div class="modal__box">
+          <h3>Nuevo Cuaderno</h3>
+          <input class="input" id="course-name" placeholder="Nombre del curso (ej: Desarrollo Web)" />
+          <input class="input" id="course-code" placeholder="Código (ej: IS093A)" />
+          <input class="input" id="course-color" type="color" value="#00ff88" />
+          <div class="modal__actions">
+            <button class="btn btn--ghost" onclick="closeModal('modal-course')">Cancelar</button>
+            <button class="btn btn--primary" onclick="saveCourse()">Crear</button>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- ===== CONTACTO ===== -->
     <section class="section contact" id="contact">
-      <div class="section__header"><span class="section__num">05</span><h2 class="section__title">Contacto</h2></div>
+      <div class="section__header">
+        <span class="section__num">05</span>
+        <h2 class="section__title">Contacto</h2>
+      </div>
       <div class="contact__grid">
         <div class="contact__info">
+          <p>¿Tienes una oportunidad, proyecto o colaboración? Escríbeme.</p>
           <div class="contact__links">
-            <a href="#" target="_blank" class="contact-link" id="github-link">⌥ GitHub</a>
-            <a href="#" class="contact-link" id="email-link">@ Email</a>
+            <a href="https://github.com/TU_USUARIO" target="_blank" class="contact-link" id="github-link">
+              <span class="contact-link__icon">⌥</span> GitHub
+            </a>
+            <a href="mailto:tu@email.com" class="contact-link" id="email-link">
+              <span class="contact-link__icon">@</span> Email
+            </a>
+            <a href="https://linkedin.com/in/TU_USUARIO" target="_blank" class="contact-link" id="linkedin-link">
+              <span class="contact-link__icon">in</span> LinkedIn
+            </a>
           </div>
-          <button class="btn btn--outline" onclick="openEditContact()">✏️ Editar mis datos</button>
+          <button class="btn btn--outline" style="margin-top:1.5rem;" onclick="openEditContact()">✏️ Editar mis datos</button>
+        </div>
+        <div class="contact__form-area">
+          <p class="contact__note">💡 Actualiza tus links reales en "Editar mis datos"</p>
+        </div>
+      </div>
+
+      <!-- Modal editar contacto -->
+      <div class="modal" id="modal-contact">
+        <div class="modal__box">
+          <h3>Mis datos de contacto</h3>
+          <input class="input" id="c-github" placeholder="Usuario GitHub (ej: benjaminm)" />
+          <input class="input" id="c-email" placeholder="Email" />
+          <input class="input" id="c-linkedin" placeholder="Usuario LinkedIn" />
+          <div class="modal__actions">
+            <button class="btn btn--ghost" onclick="closeModal('modal-contact')">Cancelar</button>
+            <button class="btn btn--primary" onclick="saveContact()">Guardar</button>
+          </div>
         </div>
       </div>
     </section>
+
   </main>
 
-  <div class="modal" id="modal-project">
-    <div class="modal__box">
-      <h3>Nuevo Proyecto</h3>
-      <input class="input" id="proj-title" placeholder="Nombre" />
-      <textarea class="input" id="proj-desc" placeholder="Descripción..." rows="3"></textarea>
-      <div class="modal__actions">
-        <button class="btn btn--ghost" onclick="closeModal('modal-project')">Cancelar</button>
-        <button class="btn btn--primary" onclick="saveProject()">Guardar</button>
-      </div>
-    </div>
-  </div>
-
+  <!-- FOOTER -->
   <footer class="footer">
-    <span>© 2025 Benjamin Mendoza · UNCP</span>
+    <span>© 2025 Benjamin Mendoza · UNCP Ing. Sistemas</span>
+    <span class="footer-tag">Hecho con HTML + CSS + JS</span>
   </footer>
 
   <script src="app.js"></script>
