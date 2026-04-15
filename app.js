@@ -17,24 +17,30 @@ const STORAGE = {
 // NAVEGACIÓN POR SECCIONES
 // ──────────────────────────────────────────
 function showSection(id) {
+  // 1. Limpiar estados activos previos
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav__item').forEach(b => b.classList.remove('active'));
 
   const sec = document.getElementById(id);
-  if (sec) sec.classList.add('active');
+  if (sec) {
+    // 2. Activar la nueva sección
+    sec.classList.add('active');
+    
+    // 3. AÑADIDO: Scroll automático al inicio de la sección seleccionada
+    // Esto asegura que la pantalla se mueva exactamente a donde empieza el bloque
+    sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 
-  // marcar nav activo
+  // 4. Marcar nav activo en la interfaz
   document.querySelectorAll('.nav__item').forEach(b => {
     if (b.getAttribute('onclick')?.includes(id)) b.classList.add('active');
   });
 
-  // cerrar menú mobile
+  // 5. Cerrar menú mobile si estuviera abierto
   document.querySelector('.nav')?.classList.remove('open');
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Burger menu
+// Burger menu para dispositivos móviles
 document.getElementById('burger')?.addEventListener('click', () => {
   document.querySelector('.nav')?.classList.toggle('open');
 });
@@ -68,15 +74,17 @@ function openAddProject() { openModal('modal-project'); }
 
 function saveProject() {
   const title = document.getElementById('proj-title').value.trim();
-  const tech  = document.getElementById('proj-tech').value.trim();
+  const tech  = document.getElementById('proj-tech').value.trim(); // Asegúrate de tener este ID en tu HTML si lo usas
   const desc  = document.getElementById('proj-desc').value.trim();
-  const link  = document.getElementById('proj-link').value.trim();
+  const link  = document.getElementById('proj-link')?.value.trim() || ''; 
+  
   if (!title) { alert('El nombre del proyecto es requerido'); return; }
+  
   projects.push({ id: Date.now(), title, tech, desc, link });
   STORAGE.set('portfolio_projects', projects);
   renderProjects();
   closeModal('modal-project');
-  clearInputs(['proj-title','proj-tech','proj-desc','proj-link']);
+  clearInputs(['proj-title', 'proj-desc']);
 }
 
 function deleteProject(id) {
@@ -89,11 +97,11 @@ function deleteProject(id) {
 // ──────────────────────────────────────────
 // CUADERNOS
 // ──────────────────────────────────────────
-let courses       = STORAGE.get('portfolio_courses', [
+let courses = STORAGE.get('portfolio_courses', [
   { id: 1, name: 'Desarrollo de Aplicaciones Web', code: 'IS093A', color: '#00ff88' }
 ]);
-let allEntries    = STORAGE.get('portfolio_entries', []);
-let activeCourse  = null;
+let allEntries = STORAGE.get('portfolio_entries', []);
+let activeCourse = null;
 
 function renderCourses() {
   const list = document.getElementById('courses-list');
@@ -201,9 +209,12 @@ function applyContact() {
 }
 
 function openEditContact() {
-  document.getElementById('c-github').value   = contactData.github   || '';
-  document.getElementById('c-email').value    = contactData.email    || '';
-  document.getElementById('c-linkedin').value = contactData.linkedin || '';
+  const ghInput = document.getElementById('c-github');
+  const emInput = document.getElementById('c-email');
+  const liInput = document.getElementById('c-linkedin');
+  if(ghInput) ghInput.value = contactData.github || '';
+  if(emInput) emInput.value = contactData.email || '';
+  if(liInput) liInput.value = contactData.linkedin || '';
   openModal('modal-contact');
 }
 
@@ -222,12 +233,10 @@ function saveContact() {
 function openModal(id)  { document.getElementById(id)?.classList.add('open'); }
 function closeModal(id) { document.getElementById(id)?.classList.remove('open'); }
 
-// Cerrar modal al hacer click fuera
 document.addEventListener('click', e => {
   if (e.target.classList.contains('modal')) e.target.classList.remove('open');
 });
 
-// Escape para cerrar modal
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open'));
 });
@@ -249,5 +258,5 @@ document.addEventListener('DOMContentLoaded', () => {
   renderProjects();
   renderCourses();
   applyContact();
-  showSection('hero'); // sección inicial
+  showSection('hero'); 
 });
