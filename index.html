@@ -13,16 +13,15 @@
 </head>
 <body>
 
-  <!-- HEADER / NAV -->
   <header class="header" id="header">
     <div class="header__inner">
-      <a href="#hero" class="logo">BY<span class="logo-dot">.</span></a>
+      <a href="#" class="logo" onclick="showSection('hero')">BY<span class="logo-dot">.</span></a>
       <nav class="nav" aria-label="Navegación principal">
         <button class="nav__item" onclick="showSection('hero')">Inicio</button>
         <button class="nav__item" onclick="showSection('about')">Sobre mí</button>
         <button class="nav__item" onclick="showSection('projects')">Proyectos</button>
         <button class="nav__item" onclick="showSection('skills')">Habilidades</button>
-        <button class="nav__item active" onclick="showSection('notebooks')">Cuadernos</button>
+        <button class="nav__item" onclick="showSection('notebooks')">Cuadernos</button>
         <button class="nav__item contact-btn" onclick="showSection('contact')">Contacto</button>
       </nav>
       <button class="burger" id="burger" aria-label="Abrir menú">
@@ -31,10 +30,12 @@
     </div>
   </header>
 
-  <!-- MAIN CONTENT WRAPPER -->
+  <!-- Notificación guardado -->
+  <div class="toast" id="toast">✓ Guardado en la nube</div>
+
   <main>
 
-    <!-- ===== HERO ===== -->
+    <!-- HERO -->
     <section class="section hero active" id="hero">
       <div class="hero__bg-grid"></div>
       <div class="hero__content">
@@ -50,13 +51,13 @@
         <pre><code><span class="c-kw">const</span> dev = {
   name: <span class="c-str">"Benjamin"</span>,
   stack: [<span class="c-str">"HTML"</span>, <span class="c-str">"CSS"</span>, <span class="c-str">"JS"</span>],
-  uni: <span class="c-str">"UNCP"</span>,
-  passion: <span class="c-str">"sistemas"</span>
+  db: <span class="c-str">"Firebase ☁️"</span>,
+  uni: <span class="c-str">"UNCP"</span>
 };</code></pre>
       </div>
     </section>
 
-    <!-- ===== SOBRE MÍ ===== -->
+    <!-- SOBRE MÍ -->
     <section class="section about" id="about">
       <div class="section__header">
         <span class="section__num">01</span>
@@ -65,7 +66,6 @@
       <div class="about__grid">
         <div class="about__text">
           <p>Soy estudiante de Ingeniería de Sistemas en la <strong>Universidad Nacional del Centro del Perú</strong>, cursando el 9° semestre. Me interesa el análisis de datos, el desarrollo web y la resolución de problemas complejos con tecnología.</p>
-          <p>Fuera de la universidad, soy líder de grupo juvenil en mi iglesia y me apasiona la música, la moda vintage y el ejercicio.</p>
           <div class="about__stats">
             <div class="stat"><span class="stat__num">9°</span><span class="stat__label">Semestre</span></div>
             <div class="stat"><span class="stat__num">IS093A</span><span class="stat__label">Curso actual</span></div>
@@ -84,18 +84,17 @@
       </div>
     </section>
 
-    <!-- ===== PROYECTOS ===== -->
+    <!-- PROYECTOS -->
     <section class="section projects" id="projects">
       <div class="section__header">
         <span class="section__num">02</span>
         <h2 class="section__title">Proyectos</h2>
       </div>
       <div class="projects__grid" id="projects-grid">
-        <!-- Generados dinámicamente por JS -->
+        <div class="loading-card">Conectando con Firebase...</div>
       </div>
       <button class="btn btn--outline add-btn" onclick="openAddProject()">+ Añadir proyecto</button>
 
-      <!-- Modal agregar proyecto -->
       <div class="modal" id="modal-project">
         <div class="modal__box">
           <h3>Nuevo Proyecto</h3>
@@ -111,7 +110,7 @@
       </div>
     </section>
 
-    <!-- ===== HABILIDADES ===== -->
+    <!-- HABILIDADES -->
     <section class="section skills" id="skills">
       <div class="section__header">
         <span class="section__num">03</span>
@@ -131,7 +130,7 @@
           <div class="skill-card__icon">📊</div>
           <h3>Datos</h3>
           <div class="skill-tags">
-            <span class="tag">Excel</span><span class="tag">SQL básico</span>
+            <span class="tag">Excel</span><span class="tag">SQL</span>
             <span class="tag">PostgreSQL</span>
           </div>
         </div>
@@ -148,30 +147,26 @@
           <h3>Herramientas</h3>
           <div class="skill-tags">
             <span class="tag">VS Code</span><span class="tag">GitHub</span>
-            <span class="tag">Figma básico</span>
+            <span class="tag">Firebase</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===== CUADERNOS ===== -->
+    <!-- CUADERNOS -->
     <section class="section notebooks" id="notebooks">
       <div class="section__header">
         <span class="section__num">04</span>
         <h2 class="section__title">Cuadernos de Clase</h2>
-        <p class="section__sub">Apuntes organizados por curso y semana</p>
+        <p class="section__sub">Apuntes por curso — sincronizados en la nube ☁️</p>
       </div>
-
       <div class="notebooks__layout">
-        <!-- Sidebar: lista de cuadernos -->
         <aside class="notebooks__sidebar">
           <div class="notebooks__courses" id="courses-list">
-            <!-- Generado por JS -->
+            <div class="loading-card">Cargando...</div>
           </div>
           <button class="btn btn--outline add-btn" onclick="openAddCourse()">+ Nuevo curso</button>
         </aside>
-
-        <!-- Panel principal -->
         <div class="notebooks__main">
           <div class="notebook__header" id="notebook-title">
             <span>Selecciona un curso</span>
@@ -185,17 +180,17 @@
             <textarea class="input" id="entry-notes" placeholder="Apuntes, conceptos clave, tareas..." rows="4"></textarea>
             <button class="btn btn--primary" onclick="saveEntry()">Guardar apunte</button>
           </div>
-          <button class="btn btn--ghost" id="show-add-entry" onclick="toggleAddEntry()" style="display:none; margin-top:1rem;">+ Agregar apunte</button>
+          <button class="btn btn--ghost" id="show-add-entry" onclick="toggleAddEntry()" style="display:none;margin-top:1rem;">+ Agregar apunte</button>
         </div>
       </div>
 
-      <!-- Modal nuevo curso -->
       <div class="modal" id="modal-course">
         <div class="modal__box">
           <h3>Nuevo Cuaderno</h3>
           <input class="input" id="course-name" placeholder="Nombre del curso (ej: Desarrollo Web)" />
           <input class="input" id="course-code" placeholder="Código (ej: IS093A)" />
-          <input class="input" id="course-color" type="color" value="#00ff88" />
+          <label style="font-size:0.78rem;color:var(--text-dim);">Color del cuaderno</label>
+          <input class="input" id="course-color" type="color" value="#00ff88" style="height:42px;padding:4px;" />
           <div class="modal__actions">
             <button class="btn btn--ghost" onclick="closeModal('modal-course')">Cancelar</button>
             <button class="btn btn--primary" onclick="saveCourse()">Crear</button>
@@ -204,7 +199,7 @@
       </div>
     </section>
 
-    <!-- ===== CONTACTO ===== -->
+    <!-- CONTACTO -->
     <section class="section contact" id="contact">
       <div class="section__header">
         <span class="section__num">05</span>
@@ -214,24 +209,29 @@
         <div class="contact__info">
           <p>¿Tienes una oportunidad, proyecto o colaboración? Escríbeme.</p>
           <div class="contact__links">
-            <a href="https://github.com/TU_USUARIO" target="_blank" class="contact-link" id="github-link">
-              <span class="contact-link__icon">⌥</span> GitHub
+            <a href="#" target="_blank" class="contact-link" id="github-link">
+              <span class="contact-link__icon">⌥</span>
+              <span id="github-label">GitHub</span>
             </a>
-            <a href="mailto:tu@email.com" class="contact-link" id="email-link">
-              <span class="contact-link__icon">@</span> Email
+            <a href="#" class="contact-link" id="email-link">
+              <span class="contact-link__icon">@</span>
+              <span id="email-label">Email</span>
             </a>
-            <a href="https://linkedin.com/in/TU_USUARIO" target="_blank" class="contact-link" id="linkedin-link">
-              <span class="contact-link__icon">in</span> LinkedIn
+            <a href="#" target="_blank" class="contact-link" id="linkedin-link">
+              <span class="contact-link__icon">in</span>
+              <span id="linkedin-label">LinkedIn</span>
             </a>
           </div>
           <button class="btn btn--outline" style="margin-top:1.5rem;" onclick="openEditContact()">✏️ Editar mis datos</button>
         </div>
         <div class="contact__form-area">
-          <p class="contact__note">💡 Actualiza tus links reales en "Editar mis datos"</p>
+          <div class="contact__note">
+            <p style="font-size:0.8rem;color:var(--accent);margin-bottom:0.5rem;">☁️ Firebase conectado</p>
+            <p style="font-size:0.75rem;color:var(--text-dim);">Tus datos se guardan en <strong style="color:var(--text)">Realtime Database</strong> y son accesibles desde cualquier dispositivo en tiempo real.</p>
+          </div>
         </div>
       </div>
 
-      <!-- Modal editar contacto -->
       <div class="modal" id="modal-contact">
         <div class="modal__box">
           <h3>Mis datos de contacto</h3>
@@ -248,12 +248,11 @@
 
   </main>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <span>© 2025 Benjamin Yauri · UNCP Ing. Sistemas</span>
-    <span class="footer-tag">Hecho con HTML + CSS + JS</span>
+    <span class="footer-tag">HTML + CSS + JS + Firebase ☁️</span>
   </footer>
 
-  <script src="app.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
