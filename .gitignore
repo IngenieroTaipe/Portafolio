@@ -1,0 +1,15 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno
+.env
+
+# Sistema Windows
+Thumbs.db
+desktop.ini
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
