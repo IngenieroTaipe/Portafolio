@@ -31,62 +31,24 @@ let quill          = null;
 let editingEntryId = null;   // null = nuevo, string = editar
 let pendingAttachments = [];  // [{ type, url, name, isPdf }]
 
-/* ════════════════════════════════════════════════════════════
-   3. NAVEGACIÓN Y GESTIÓN DE ESTADOS (PASO 3)
-   ════════════════════════════════════════════════════════════ */
-
-// IA: Generar scroll básico → Corrección manual: Implementación de setTimeout(10ms) 
-// para sincronizar el reflow del DOM con el motor de scroll del navegador.
-window.showSection = function(id) {
-  // 3.1. Limpieza de estados previos (Arquitectura limpia)
-  const sections = document.querySelectorAll('.section');
-  const navLinks = document.querySelectorAll('.nav__item');
-  
-  sections.forEach(s => s.classList.remove('active'));
-  navLinks.forEach(l => l.classList.remove('active'));
-
-  // 3.2. Activación de la sección objetivo
-  const targetSection = document.getElementById(id);
-  
-  if (targetSection) {
-    targetSection.classList.add('active');
-    
-    // IA: Sugerir window.scrollTo(0) → Corrección manual: Uso de scrollIntoView 
-    // con 'block: start' para alineación precisa con el header fijo.
-    setTimeout(() => {
-      targetSection.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start' 
-      });
-    }, 10); 
-  }
-
-  // 3.3. Feedback visual en el menú (Sin usar 'onclick' inyectado)
-  // Buscamos el link que corresponde a esta sección mediante el atributo data-section
-  const activeLink = document.querySelector(`.nav__item[data-section="${id}"]`);
-  if (activeLink) activeLink.classList.add('active');
-
-  // 3.4. Cerrar menú móvil y resetear ARIA para accesibilidad
-  const navMenu = document.getElementById('nav');
-  const burgerBtn = document.getElementById('burger');
-  
-  if (navMenu?.classList.contains('open')) {
-    navMenu.classList.remove('open');
-    burgerBtn?.setAttribute('aria-expanded', 'false');
-  }
+// ══════════════════════════════════════════════
+//  3. NAVEGACIÓN
+// ══════════════════════════════════════════════
+window.showSection = id => {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav__item').forEach(b => b.classList.remove('active'));
+  document.getElementById(id)?.classList.add('active');
+  document.querySelectorAll('.nav__item').forEach(b => {
+    if (b.getAttribute('onclick')?.includes(id)) b.classList.add('active');
+  });
+  document.getElementById('nav')?.classList.remove('open');
+  window.scrollTo({ top:0, behavior:'smooth' });
 };
 
-/* ════════════════════════════════════════════════════════════
-   GESTIÓN DEL MENÚ BURGER (Accesibilidad Paso 36)
-   ════════════════════════════════════════════════════════════ */
-document.getElementById('burger')?.addEventListener('click', function() {
-  const nav = document.getElementById('nav');
-  const isOpen = nav?.classList.toggle('open');
-  
-  // IA: Toggle básico → Corrección manual: Actualización dinámica de aria-expanded 
-  // para cumplir con la navegación por lectores de pantalla.
-  this.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+document.getElementById('burger')?.addEventListener('click', () => {
+  document.getElementById('nav')?.classList.toggle('open');
 });
+
 // ══════════════════════════════════════════════
 //  4. TOAST
 // ══════════════════════════════════════════════
