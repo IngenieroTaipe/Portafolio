@@ -171,16 +171,71 @@
           <div class="notebook__header" id="notebook-title">
             <span>Selecciona un curso</span>
           </div>
+          
+          <!-- Navegador de Semanas -->
+          <div class="notebook__week-nav" id="week-navigation-area" style="display:none;">
+            <button class="week-nav-btn" id="btn-prev-week" onclick="navigateWeek(-1)" title="Semana anterior">←</button>
+            <div class="week-select-container">
+              <select class="input week-select" id="week-select-dropdown" onchange="onWeekDropdownChange(this.value)">
+                <!-- Poblado dinámicamente -->
+              </select>
+            </div>
+            <button class="week-nav-btn" id="btn-next-week" onclick="navigateWeek(1)" title="Siguiente semana">→</button>
+            <button class="btn btn--ghost" id="btn-add-week" onclick="promptAddWeek()" style="margin-left:auto; font-size:0.75rem; padding: 0.4rem 0.8rem; margin-top: 0; display: inline-flex; width: auto;">+ Semana</button>
+          </div>
+
           <div class="notebook__entries" id="notebook-entries">
             <p class="empty-msg">← Elige un cuaderno para ver sus apuntes</p>
           </div>
-          <div class="notebook__add-entry" id="add-entry-area" style="display:none;">
-            <input class="input" id="entry-week" placeholder="Semana (ej: Semana 02)" />
-            <input class="input" id="entry-topic" placeholder="Tema de la clase" />
-            <textarea class="input" id="entry-notes" placeholder="Apuntes, conceptos clave, tareas..." rows="4"></textarea>
-            <button class="btn btn--primary" onclick="saveEntry()">Guardar apunte</button>
+
+          <!-- Formulario de Edición Estructurado (Estilo Notion) -->
+          <div class="notebook__add-entry" id="add-entry-area" style="display:none; flex-direction: column; gap: 1rem;">
+            <h4 style="font-family:var(--font-head); font-size:0.95rem; color:var(--accent2); margin-bottom:0.25rem;" id="editor-mode-title">Nueva Bitácora Semanal</h4>
+            
+            <div class="editor-field">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                <label class="info-label" style="font-weight: bold; color: var(--text); margin-bottom: 0;">1. Temas Aprendidos (Markdown soportado)</label>
+                <button type="button" class="btn-editor-tool" onclick="insertFormat('entry-learned', '**')" title="Negrita (Ctrl+B)"><b>B</b></button>
+              </div>
+              <textarea class="input" id="entry-learned" placeholder="Describe los temas aprendidos con tus propias palabras... Usa # para títulos, * para listas." rows="4"></textarea>
+            </div>
+            
+            <div class="editor-field">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                <label class="info-label" style="font-weight: bold; color: var(--text); margin-bottom: 0;">2. Ejercicios de Laboratorio (Markdown + Código soportado)</label>
+                <button type="button" class="btn-editor-tool" onclick="insertFormat('entry-labs', '**')" title="Negrita (Ctrl+B)"><b>B</b></button>
+              </div>
+              <textarea class="input" id="entry-labs" placeholder="Pega el código fuente o detalla los ejercicios prácticos... Usa ```javascript para bloques de código." rows="5"></textarea>
+              
+              <!-- Subida de Imagen -->
+              <div class="file-upload-wrapper" style="margin-top: 0.75rem;">
+                <label for="entry-image" class="file-upload-label">
+                  <span class="file-upload-icon">📷</span>
+                  <span id="file-upload-text">Agregar Imagen / Captura (Opcional)</span>
+                </label>
+                <input type="file" id="entry-image" accept="image/*" onchange="handleImageSelect(event)" style="display:none;" />
+                <div id="image-preview-container" style="display:none; position:relative; margin-top:0.5rem; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); max-width:240px;">
+                  <img id="image-preview" src="" alt="Vista previa" style="width:100%; display:block; height:auto;" />
+                  <button class="image-preview-delete" onclick="clearSelectedImage()" type="button" title="Quitar imagen">✕</button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="editor-field">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                <label class="info-label" style="font-weight: bold; color: var(--text); margin-bottom: 0;">3. Reflexión / Metacognición (Markdown soportado)</label>
+                <button type="button" class="btn-editor-tool" onclick="insertFormat('entry-metacognition', '**')" title="Negrita (Ctrl+B)"><b>B</b></button>
+              </div>
+              <textarea class="input" id="entry-metacognition" placeholder="¿Qué te pareció difícil? ¿Cómo lo resolviste? Reflexión metacognitiva..." rows="3"></textarea>
+            </div>
+            
+            <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+              <button class="btn btn--primary" onclick="saveEntry()" style="flex:1; justify-content:center;">Guardar Bitácora</button>
+              <button class="btn btn--ghost" onclick="cancelEdit()" style="flex:0.5; justify-content:center;">Cancelar</button>
+            </div>
           </div>
-          <button class="btn btn--ghost" id="show-add-entry" onclick="toggleAddEntry()" style="display:none;margin-top:1rem;">+ Agregar apunte</button>
+          
+          <button class="btn btn--ghost" id="show-add-entry" onclick="toggleAddEntry()" style="display:none;margin-top:1rem;">+ Llenar Bitácora</button>
         </div>
       </div>
 
@@ -253,6 +308,14 @@
     <span class="footer-tag">HTML + CSS + JS + Firebase ☁️</span>
   </footer>
 
+  <!-- Modal para ver imágenes en grande (Lightbox) -->
+  <div class="modal" id="modal-image-lightbox" onclick="closeModal('modal-image-lightbox')">
+    <div class="modal__box" style="max-width: 90%; background: transparent; border: none; padding: 0; box-shadow: none; display: flex; justify-content: center; align-items: center;">
+      <img id="lightbox-img" src="" alt="Vista ampliada" style="max-width: 100%; max-height: 85vh; object-fit: contain; border-radius: var(--radius); border: 2px solid var(--border); background: var(--bg);" />
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script type="module" src="app.js"></script>
 </body>
 </html>
