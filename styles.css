@@ -166,7 +166,7 @@ button { cursor: pointer; font-family: var(--font-mono); border: none; backgroun
 /* =========================================
    ABOUT
    ========================================= */
-.about__grid { display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: start; }
+.about__grid { display: grid; grid-template-columns: 1fr auto auto; gap: 3rem; align-items: start; }
 .about__text p { color: var(--text-dim); margin-bottom: 1rem; text-align: justify; }
 .about__text strong { color: var(--text); }
 .about__stats { display: flex; gap: 2rem; margin-top: 2rem; flex-wrap: wrap; }
