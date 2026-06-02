@@ -166,7 +166,7 @@ button { cursor: pointer; font-family: var(--font-mono); border: none; backgroun
 /* =========================================
    ABOUT
    ========================================= */
-.about__grid { display: grid; grid-template-columns: 1fr auto; gap: 10rem; align-items: start; }
+.about__grid { display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: start; }
 .about__text p { color: var(--text-dim); margin-bottom: 1rem; text-align: justify; }
 .about__text strong { color: var(--text); }
 .about__stats { display: flex; gap: 2rem; margin-top: 2rem; flex-wrap: wrap; }
@@ -185,6 +185,14 @@ button { cursor: pointer; font-family: var(--font-mono); border: none; backgroun
 .info-label { display: block; font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1px; }
 .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 0.7rem; }
 .badge--green { background: rgba(0,255,136,0.15); color: var(--accent); border: 1px solid rgba(0,255,136,0.3); }
+.about_me {
+  width: 15rem;        /* o el tamaño que tengas */
+  height: auto;
+  border-radius: 50%;  /* hace la foto circular */
+  object-fit: cover;   /* recorta sin deformar */
+  display: block;
+  margin: 0 auto 1rem;
+}
 
 /* =========================================
    PROJECTS
